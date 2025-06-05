@@ -1,1 +1,1 @@
-# atcoder
+# Atcoder用のリポジトリ
