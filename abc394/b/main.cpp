@@ -126,21 +126,16 @@ ll rec(ll base, ll exp, ll mod) {
 }
 
 int main() {
-    string s;
-    cin >> s;
-    int n = s.size();
-    rep(i, n - 1) {
-        if (s[i] == 'W' && s[i + 1] == 'A') {
-            s[i] = 'A';
-            s[i + 1] = 'C';
-        }
+    int n;
+    cin >> n;
+    vector<pair<int, int>> vec;
+    vs s(n);
+    rep(i, n) {
+        cin >> s[i];
+        vec.pb({s[i].size(), i});
     }
-    rrepd(i, n - 1) {
-        if (s[i] == 'A' && s[i - 1] == 'W') {
-            s[i] = 'C';
-            s[i - 1] = 'A';
-        }
-    }
-    out(s);
+    sort(all(vec));
+    rep(i, n) { cout << s[vec[i].second]; }
+    out("");
     return 0;
 }
