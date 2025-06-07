@@ -75,7 +75,7 @@ string tobasen(ll num, ll n) {
 }
 
 /* vector<string>を90度時計回り*/
-vector<string> rotate90Right(const vector<string>& grid) {
+vector<string> rotate90Right(const vector<string> &grid) {
     int N = grid.size();
     vector<string> res(N, string(N, ' '));
     for (int i = 0; i < N; ++i) {
@@ -85,7 +85,6 @@ vector<string> rotate90Right(const vector<string>& grid) {
     }
     return res;
 }
-
 
 /* UnionFind */
 struct UnionFind {
@@ -127,5 +126,32 @@ ll rec(ll base, ll exp, ll mod) {
 }
 
 int main() {
+    int n, q;
+    cin >> n >> q;
+    map<int, int> pigeon;
+    vector<set<int>> box(n);
+    int cnt = 0;
+    rep(i, n) {
+        pigeon[i] = i;
+        box[i].insert(i);
+    }
+    set<int> se;
+    rep(i, q) {
+        int query;
+        cin >> query;
+        if (query == 1) {
+            int p, h;
+            cin >> p >> h;
+            p--;
+            h--;
+            box[pigeon[p]].erase(p);
+            if (box[pigeon[p]].size() == 1) cnt--;
+            pigeon[p] = h;
+            box[pigeon[p]].insert(p);
+            if (box[pigeon[p]].size() == 2) cnt++;
+        } else {
+            out(cnt);
+        }
+    }
     return 0;
 }
