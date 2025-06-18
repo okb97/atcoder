@@ -116,16 +116,21 @@ int main() {
     int n, m;
     cin >> n >> m;
     UnionFind uf(n);
-    bool hasCycle = false;
+    bool isCycle = true;
+    vvi vec(n, vi());
+    vi a(m), b(m);
     rep(i, m) {
-        int a, b;
-        cin >> a >> b;
-        --a;
-        --b;
-        if (!uf.unite(a, b)) {
-            hasCycle = true;
-        }
+        cin >> a[i] >> b[i];
+        --a[i];
+        --b[i];
+        vec[a[i]].pb(b[i]);
+        vec[b[i]].pb(a[i]);
+        uf.unite(a[i], b[i]);
     }
-    YesNo(!hasCycle);
+    rep(i, n) {
+        if (i != n - 1 && !uf.issame((int)i, (int)i + 1)) isCycle = false;
+        if (vec[i].size() != 2) isCycle = false;
+    }
+    YesNo(isCycle);
     return 0;
 }
