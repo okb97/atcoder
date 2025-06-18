@@ -75,7 +75,7 @@ string tobasen(ll num, ll n) {
 }
 
 /* vector<string>を90度時計回り*/
-vector<string> rotate90Right(const vector<string>& grid) {
+vector<string> rotate90Right(const vector<string> &grid) {
     int N = grid.size();
     vector<string> res(N, string(N, ' '));
     for (int i = 0; i < N; ++i) {
@@ -85,7 +85,6 @@ vector<string> rotate90Right(const vector<string>& grid) {
     }
     return res;
 }
-
 
 /* UnionFind */
 struct UnionFind {
@@ -127,5 +126,30 @@ ll rec(ll base, ll exp, ll mod) {
 }
 
 int main() {
+    int n;
+    cin >> n;
+    vector<double> k(n);
+    vector<vector<double>> a(n);
+    vector<map<double, double>> cnt(n);
+    rep(i, n) {
+        cin >> k[i];
+        a[i].resize(k[i]);
+        rep(j, k[i]) {
+            cin >> a[i][j];
+            cnt[i][a[i][j]]++;
+        }
+    }
+    double ans = 0;
+    rep(i, n - 1) {
+        reps(j, i + 1, n) {
+            double tmp = 0;
+            for (auto &[num, ci] : cnt[i]) {
+                int cj = cnt[j][num];
+                tmp += ((ci / k[i]) * (cj / k[j]));
+            }
+            chmax(ans, tmp);
+        }
+    }
+    cout << fixed << setprecision(12) << ans << endl;
     return 0;
 }
