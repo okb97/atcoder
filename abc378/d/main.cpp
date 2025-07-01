@@ -130,6 +130,32 @@ int main() {
     cin >> h >> w >> k;
     vs s(h);
     rep(i, h) cin >> s[i];
-
+    int ans = 0;
+    vvb visited(h, vb(w, false));
+    function<void(int, int, int)> dfs = [&](int num, int nowy,
+                                            int nowx) -> void {
+        visited[nowy][nowx] = true;
+        if (num == k) {
+            ans++;
+            // cout << nowy << " " << nowx << endl;
+            visited[nowy][nowx] = false;
+            return;
+        }
+        rep(i, 4) {
+            int nexty = nowy + dy4[i];
+            int nextx = nowx + dx4[i];
+            if (0 > nexty || nexty >= h || 0 > nextx || nextx >= w) continue;
+            if (visited[nexty][nextx]) continue;
+            if (s[nexty][nextx] == '#') continue;
+            dfs(num + 1, nexty, nextx);
+        }
+        visited[nowy][nowx] = false;
+    };
+    rep(i, h) {
+        rep(j, w) {
+            if (s[i][j] == '.') dfs(0, i, j);
+        }
+    }
+    out(ans);
     return 0;
 }
